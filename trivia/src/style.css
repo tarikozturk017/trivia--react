@@ -1,0 +1,9 @@
+.App{
+    display: flex;
+    margin: auto;
+    margin-top: 5vh;
+    background-color: #F5F7FB;
+    width: 80vh;
+    height: 80vh;
+    max-height: 500px;
+}
