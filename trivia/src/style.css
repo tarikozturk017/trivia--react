@@ -1,6 +1,5 @@
 body{
     margin: 0;
-    
     padding: 0;
 }
 
@@ -54,8 +53,8 @@ hr{
 }
 
 .btn-primary {
-    display: table;
-    margin: auto;
+    display: block;
+    margin: 5vh auto;
     background: #4D5B9E;
     border-radius: 15px;    
     width: 193px;
@@ -76,13 +75,13 @@ hr{
 }
 
 .container{
-    margin-top: 5vh;
-    
+    margin-top: 3vh;
 }
 
 .question--item {
-    height: 13vh;
-    width: 50vw;
+    height: 12.5vh;
+    max-height: 120px;
+    min-width: 65vw;
 }
 
 .question--item > p{
@@ -102,4 +101,13 @@ hr{
     height: 25px;
     padding: 5px 13px;
     margin-right: 25px;
+    cursor: pointer;
+}
+
+.choice-container > button:focus{
+    outline: none;
+}
+
+.choice-container > button:active{
+    box-shadow: inset 5px 5px 10px -5px rgba(0, 0, 0, 0.7);
 }

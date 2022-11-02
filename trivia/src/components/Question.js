@@ -10,7 +10,7 @@ export default function Question(props) {
             const shuffledChoices = choices.sort((a, b) => 0.5 - Math.random());
 
             return (
-                <QuestionItem question={question.question} choices={choices}/>
+                <QuestionItem question={question.question} choices={shuffledChoices}/>
             )
         })
     }
@@ -18,47 +18,6 @@ export default function Question(props) {
     return (
         <div className="container">
             {questionItems}
-            {/* <QuestionItem question='Hello how are you?' choices={arr}/>
-            <div className="question--item">
-                <p>How would one say goodbye in Spanish?</p>
-                <div className="choice-container">
-                    <button>A</button>
-                    <button>B</button>
-                    <button>C</button>
-                    <button>D</button>
-                </div>
-                <hr />
-            </div>
-            <div className="question--item">
-                <p>How would one say goodbye in Spanish?</p>
-                <div className="choice-container">
-                    <button>A</button>
-                    <button>B</button>
-                    <button>C</button>
-                    <button>D</button>
-                </div>
-                <hr />
-            </div>
-            <div className="question--item">
-                <p>How would one say goodbye in Spanish?</p>
-                <div className="choice-container">
-                    <button>A</button>
-                    <button>B</button>
-                    <button>C</button>
-                    <button>D</button>
-                </div>
-                <hr />
-            </div>
-            <div className="question--item">
-                <p>How would one say goodbye in Spanish?</p>
-                <div className="choice-container">
-                    <button>A</button>
-                    <button>B</button>
-                    <button>C</button>
-                    <button>D</button>
-                </div>
-                <hr />
-            </div> */}
             <button className="btn-primary">Check answers</button>
         </div>
     )
