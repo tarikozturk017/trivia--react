@@ -10,7 +10,11 @@ export default function Question(props) {
             const shuffledChoices = choices.sort((a, b) => 0.5 - Math.random());
 
             return (
-                <QuestionItem question={question.question} choices={shuffledChoices}/>
+                <QuestionItem 
+                    question={question.question} 
+                    choices={shuffledChoices} 
+                    correctAnswer={question.correct_answer} 
+                />
             )
         })
     }

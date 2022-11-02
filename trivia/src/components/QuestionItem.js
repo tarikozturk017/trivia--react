@@ -4,16 +4,6 @@ import {decode} from 'html-entities';
 import { nanoid } from 'nanoid'
 
 export default function QuestionItem(props) {
-    // const choices = props.choices.map(choice => {
-    //     return (
-    //         <button 
-    //             onClick={handleChoice} 
-    //         >
-    //             {decode(choice)}
-    //         </button>
-    //     )
-    // })
-
     const choiceArr = props.choices.map(choice => {
         return {
             value: decode(choice),
