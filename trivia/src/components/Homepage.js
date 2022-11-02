@@ -5,7 +5,7 @@ export default function Homepage() {
         <div className="homepage">
             <h2>Quizzical</h2>
             <p>Some description if needed</p>
-            <button>Start quiz</button>
+            <button className="btn-primary">Start quiz</button>
         </div>
     )
 }

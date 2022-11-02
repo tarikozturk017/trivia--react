@@ -1,24 +1,32 @@
+body{
+    margin: 0;
+    
+    padding: 0;
+}
+
+hr{
+    border: 0.794239px solid #DBDEF0;
+}
+
 .App{
     display: flex;
-    margin: auto;
-    margin-top: 5vh;
     background-color: #F5F7FB;
-    width: 800px;
-    height: 800px;
+    width: 100vw;
+    height: 100vh;
     
 }
 
 .img--upper-right{
     display: absolute;
-    width: 10rem;
-    height: 10rem;
+    width: 12vw;
+    height: 12vw;
     margin: 0 0 auto auto;
 }
 
 .img--bottom-left{
-    display: absolute;
-    width: 10rem;
-    height: 10rem;
+    display: fixed;
+    width: 12vw;
+    height: 12vw;
     margin: auto auto 0 0 ;
 }
 
@@ -27,7 +35,7 @@
     margin: auto;
     font-family: 'Inter';
     font-style: normal;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 15px;
     text-align: center;
     color: #293264;
@@ -37,7 +45,7 @@
     font-family: 'Karla';
     font-style: normal;
     font-weight: 700;
-    font-size: 31.25px;
+    font-size: 35px;
 }
 
 .homepage > p {
@@ -45,7 +53,7 @@
     font-weight: 400;
 }
 
-.homepage > button {
+.btn-primary {
     display: table;
     margin: auto;
     background: #4D5B9E;
@@ -55,14 +63,43 @@
     border: none;
     color: #F5F7FB;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
 }
 
-.homepage > button:focus {
+.btn-primary:focus {
     outline: none;
 }
 
-.homepage > button:active {
+.btn-primary:active {
     box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+.container{
+    margin-top: 5vh;
+    
+}
+
+.question--item {
+    height: 13vh;
+    width: 50vw;
+}
+
+.question--item > p{
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.4em;
+    line-height: 19px;
+    color: #293264;
+}
+
+.choice-container > button {
+    border-radius: 8px;
+    border: 0.8px solid #4D5B9E;
+    width: auto;
+    min-width: 75px;
+    height: 25px;
+    padding: 5px 13px;
+    margin-right: 25px;
 }
