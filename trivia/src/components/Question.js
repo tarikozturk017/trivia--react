@@ -2,11 +2,13 @@ import React from "react"
 import QuestionItem from "./QuestionItem"
 
 export default function Question(props) {
+    const [numCorrect, setNumCorrect] = React.useState(0);
+    const [check, setCheck] = React.useState(false);
+    let answers = new Array(props.length); 
+    let correctAnswers = []
     
     let questionItems;
     if(props.length !== 0) { 
-        let answers = new Array(props.length); 
-        let correctAnswers = []
         questionItems = props.questions.map((question, index) => {
             let choices = [question.correct_answer];
             correctAnswers.push(question.correct_answer);
@@ -17,9 +19,9 @@ export default function Question(props) {
 
             function handleChoice(answer){
                 answers[index] = answer;
-                console.log(answers);
+                // console.log(answers);
 
-                console.log(correctAnswers);
+                // console.log(correctAnswers);
             }
 
 
@@ -33,11 +35,32 @@ export default function Question(props) {
             )
         })
     }
+
+    function checkAnswers() {
+        answers.map((answer, index) => {
+            if(correctAnswers[index] === answer) {
+                console.log(answer);
+                setNumCorrect(numCorrect + 1);
+            }
+        })
+
+        // console.log(answers);
+
+        console.log(correctAnswers);
+        setCheck(true);
+    }
+
     
     return (
         <div className="container">
             {questionItems}
-            <button className="btn-primary">Check answers</button>
+            { !check && <button className="btn-primary" onClick={checkAnswers}>Check answers</button>}
+            {/* { check && <div><p>You scored {numCorrect}/5 correct answers</p> </div>} */}
+            { check && 
+            <div> 
+                <p>You scored {numCorrect}/5 correct answers</p>
+                <button className="btn-primary" onClick={checkAnswers}>Play again</button> 
+            </div>}
         </div>
     )
 }
