@@ -4,6 +4,8 @@ import {decode} from 'html-entities';
 import { nanoid } from 'nanoid'
 
 export default function QuestionItem(props) {
+    // let selectedId;
+
     const choiceArr = props.choices.map(choice => {
         return {
             value: decode(choice),
@@ -17,7 +19,16 @@ export default function QuestionItem(props) {
         setChoices(oldChoices => oldChoices.map(choice => {
             return choice.id === id ? {...choice, isHeld: !choice.isHeld} : {...choice, isHeld: false}
         }))
+        // selectedId = id;
     }
+
+    React.useEffect(() => {
+        choices.map(choice => {
+            if (choice.isHeld) {
+                props.onSelectChoice(choice.value)
+            }
+        })
+    }, [choices])
 
     const choiceButtons = choices.map(choice => (
         <Choice key={choice.id} value={choice.value} isHeld={choice.isHeld} holdChoice={() => holdChoice(choice.id)} />
