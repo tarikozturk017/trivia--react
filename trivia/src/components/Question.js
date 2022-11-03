@@ -31,6 +31,7 @@ export default function Question(props) {
                     choices={shuffledChoices} 
                     correctAnswer={question.correct_answer} 
                     onSelectChoice={handleChoice}
+                    check={check}
                 />
             )
         })
@@ -55,7 +56,6 @@ export default function Question(props) {
         <div className="container">
             {questionItems}
             { !check && <button className="btn-primary" onClick={checkAnswers}>Check answers</button>}
-            {/* { check && <div><p>You scored {numCorrect}/5 correct answers</p> </div>} */}
             { check && 
             <div> 
                 <p>You scored {numCorrect}/5 correct answers</p>
