@@ -35,7 +35,7 @@ export default function Question(props) {
         answers.map((answer, index) => {
             if(correctAnswers[index] === answer) {
                 console.log(answer);
-                setNumCorrect(numCorrect + 1);
+                setNumCorrect(numCorrect => numCorrect + 1);
             }
         })
 
