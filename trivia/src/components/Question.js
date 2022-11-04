@@ -8,38 +8,33 @@ export default function Question(props) {
     let correctAnswers = []
     
     let questionItems;
-    if(props.length !== 0) { 
-        questionItems = props.questions.map((question, index) => {
-            let choices = [question.correct_answer];
-            correctAnswers.push(question.correct_answer);
-            question.incorrect_answers.map(ans => choices.push(ans));
-            const shuffledChoices = choices.sort((a, b) => 0.5 - Math.random());
+    questionItems = props.questions.map((question, index) => {
+        let choices = [question.correct_answer];
+        correctAnswers.push(question.correct_answer);
+        question.incorrect_answers.map(ans => choices.push(ans));
+        const shuffledChoices = choices.sort((a, b) => 0.5 - Math.random());
 
-            function handleChoice(answer){
-                answers[index] = answer;
-            }
-
-            return (
-                <QuestionItem 
-                    question={question.question} 
-                    choices={shuffledChoices} 
-                    correctAnswer={question.correct_answer} 
-                    onSelectChoice={handleChoice}
-                    check={check}
-                />
-            )
-        })
+        function handleChoice(answer){
+            answers[index] = answer;
     }
+
+        return (
+            <QuestionItem 
+                question={question.question} 
+                choices={shuffledChoices} 
+                correctAnswer={question.correct_answer} 
+                onSelectChoice={handleChoice}
+                check={check}
+            />
+        )
+    })
 
     function checkAnswers() {
         answers.map((answer, index) => {
             if(correctAnswers[index] === answer) {
-                console.log(answer);
                 setNumCorrect(numCorrect => numCorrect + 1);
             }
         })
-
-        console.log(correctAnswers);
         setCheck(true);
     }
 
@@ -51,7 +46,7 @@ export default function Question(props) {
             { check && 
             <div> 
                 <p>You scored {numCorrect}/5 correct answers</p>
-                <button className="btn-primary" onClick={checkAnswers}>Play again</button> 
+                <button className="btn-primary" onClick={props.startGame}>Play again</button> 
             </div>}
         </div>
     )

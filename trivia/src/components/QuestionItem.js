@@ -3,6 +3,8 @@ import Choice from "./Choice";
 import {decode} from 'html-entities';
 import { nanoid } from 'nanoid'
 
+
+
 export default function QuestionItem(props) {
     const choiceArr = props.choices.map(choice => {
         let isCorrect = decode(choice) === props.correctAnswer
@@ -14,7 +16,8 @@ export default function QuestionItem(props) {
         };
     })
     const [choices, setChoices] = React.useState(choiceArr);
-
+    // console.log("Question Item page updated!")
+    
     function holdChoice(id) {
         setChoices(oldChoices => oldChoices.map(choice => {
             return choice.id === id ? {...choice, isHeld: !choice.isHeld} : {...choice, isHeld: false}
