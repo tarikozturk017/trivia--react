@@ -15,15 +15,9 @@ export default function Question(props) {
             question.incorrect_answers.map(ans => choices.push(ans));
             const shuffledChoices = choices.sort((a, b) => 0.5 - Math.random());
 
-
-
             function handleChoice(answer){
                 answers[index] = answer;
-                // console.log(answers);
-
-                // console.log(correctAnswers);
             }
-
 
             return (
                 <QuestionItem 
@@ -44,8 +38,6 @@ export default function Question(props) {
                 setNumCorrect(numCorrect + 1);
             }
         })
-
-        // console.log(answers);
 
         console.log(correctAnswers);
         setCheck(true);

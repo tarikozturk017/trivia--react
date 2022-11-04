@@ -17,7 +17,6 @@ export default function QuestionItem(props) {
 
     function holdChoice(id) {
         setChoices(oldChoices => oldChoices.map(choice => {
-            // console.log(choice)
             return choice.id === id ? {...choice, isHeld: !choice.isHeld} : {...choice, isHeld: false}
         }))
     }
@@ -30,8 +29,27 @@ export default function QuestionItem(props) {
         })
     }, [choices])
 
+    function handleColor(id) {
+        let color;
+        choices.map(choice => {
+            if (choice.id === id) {
+                if (props.check){
+                    if(choice.isHeld && !choice.isCorrect) color = "red"
+                    else if (choice.isCorrect) color = "green";
+                }else {
+                    color = choice.isHeld ? "#D6DBF5" : "#F5F7FB";
+                }
+            }
+        })
+        return color;
+    }
+
     const choiceButtons = choices.map(choice => (
-        <Choice key={choice.id} value={choice.value} isHeld={choice.isHeld} holdChoice={() => holdChoice(choice.id)} check={props.check} isCorrect={choice.isCorrect} />
+        <Choice key={choice.id} 
+            value={choice.value}  
+            holdChoice={() => holdChoice(choice.id)} 
+            color={handleColor(choice.id)}
+        />
     ));
 
     return (
