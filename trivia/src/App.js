@@ -7,18 +7,25 @@ import './style.css'
 function App() {
   const [isPlayingGame, setIsPlayingGame] = React.useState(false);
   const [questions, setQuestions] = React.useState([]);
-
+  const [isLoaded ,setIsLoaded] = React.useState(false);
   const [numCorrect, setNumCorrect] = React.useState(0);
   const [check, setCheck] = React.useState(false);
 
   React.useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")
+    console.log("use effect")
+    if(isPlayingGame){
+    fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+          // .then(setIsLoaded(true))
           .then(res => res.json())
           .then(data => setQuestions(generateQuestions(data.results)))
-          .then("new data fetched")
+          .then(console.log("new data fetched"))
+          .then(setIsLoaded(true))
+        }
   }, [isPlayingGame])
 
   function generateNewGame() {
+    setIsLoaded(false);
+    console.log("reseting old game")
     setIsPlayingGame(false);
     setNumCorrect(0);
     setCheck(false);
@@ -115,17 +122,18 @@ function App() {
   }
 
   function startGame() {
-    console.log(`starting a new game`);
+    console.log(`starting a new game in 1 sec`);
+    setNumCorrect(0);
+    setCheck(false);
     setIsPlayingGame(true)
+
   }
 
   return (
     <div className="App">
      <img className="img--bottom-left" src="blob 5.png" alt=""/>
 
-     {!isPlayingGame ? (
-        <Homepage startGame={startGame} />
-      ) : (
+     {isPlayingGame? (
         <Question
           questions={questions}
           setQuestions={setQuestions}
@@ -138,6 +146,9 @@ function App() {
           setNumCorrect={setNumCorrect}
           generateNewGame={generateNewGame}
         />
+      )
+      : (
+        <Homepage startGame={startGame} />
       )}
 
      <img className="img--upper-right" src="blob 15.png" alt=""/>

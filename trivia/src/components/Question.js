@@ -2,7 +2,6 @@ import React from "react"
 import QuestionItem from "./QuestionItem"
 
 export default function Question(props) {
-    console.log(props);
     let displayQuestions = props.questions.map((question) => (
         
         <QuestionItem 
