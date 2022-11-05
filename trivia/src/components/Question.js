@@ -2,52 +2,45 @@ import React from "react"
 import QuestionItem from "./QuestionItem"
 
 export default function Question(props) {
-    const [numCorrect, setNumCorrect] = React.useState(0);
-    const [check, setCheck] = React.useState(false);
-    let answers = new Array(props.length); 
-    let correctAnswers = []
-    
-    let questionItems;
-    questionItems = props.questions.map((question, index) => {
-        let choices = [question.correct_answer];
-        correctAnswers.push(question.correct_answer);
-        question.incorrect_answers.map(ans => choices.push(ans));
-        const shuffledChoices = choices.sort((a, b) => 0.5 - Math.random());
-
-        function handleChoice(answer){
-            answers[index] = answer;
-    }
-
-        return (
-            <QuestionItem 
+    console.log(props);
+    let displayQuestions = props.questions.map((question) => (
+        
+        <QuestionItem 
+                key={question.id}
+                questionId={question.id}
                 question={question.question} 
-                choices={shuffledChoices} 
-                correctAnswer={question.correct_answer} 
-                onSelectChoice={handleChoice}
-                check={check}
+                choices={question.choices} 
+                correctAnswer={question.correctAnswer} 
+                questions={props.questions}
+                setQuestions={props.setQuestions}
+                holdChoice={props.holdChoice}
+                numCorrect={props.numCorrect}
+                setNumCorrect={props.setNumCorrect}
             />
-        )
-    })
-
-    function checkAnswers() {
-        answers.map((answer, index) => {
-            if(correctAnswers[index] === answer) {
-                setNumCorrect(numCorrect => numCorrect + 1);
-            }
-        })
-        setCheck(true);
-    }
-
+    ));
     
     return (
         <div className="container">
-            {questionItems}
-            { !check && <button className="btn-primary" onClick={checkAnswers}>Check answers</button>}
-            { check && 
-            <div> 
-                <p>You scored {numCorrect}/5 correct answers</p>
-                <button className="btn-primary" onClick={props.startGame}>Play again</button> 
-            </div>}
+            {displayQuestions}
+            {!props.check ? (
+                <button
+                className="btn-primary"
+                onClick={() => props.checkQuestionAnswers()}
+                >
+                Check Answers
+                </button>
+            ) : (
+                <div>
+                <p> You scored {props.numCorrect}/5 correct answers</p>
+                <button
+                    className="btn-primary"
+                    onClick={() => props.generateNewGame()}
+                >
+                    Play Again
+                </button>
+                </div>
+            )}
+
         </div>
     )
 }

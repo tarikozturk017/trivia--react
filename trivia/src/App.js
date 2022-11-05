@@ -11,56 +11,45 @@ function App() {
   const [numCorrect, setNumCorrect] = React.useState(0);
   const [check, setCheck] = React.useState(false);
 
-  // React.useEffect(() => {
-  //   fetch("https://opentdb.com/api.php?amount=5&type=multiple")
-  //     .then(res => res.json())
-  //     .then(data => setQuestions(data.results))
-  // }, [])
-
   React.useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+    fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")
           .then(res => res.json())
           .then(data => setQuestions(generateQuestions(data.results)))
+          .then("new data fetched")
   }, [isPlayingGame])
-
-  function startGame() {
-    console.log(`starting a new game`);
-    setIsPlayingGame(true)
-  }
 
   function generateNewGame() {
     setIsPlayingGame(false);
     setNumCorrect(0);
     setCheck(false);
+    React.setTimeout(() => startGame(), 0);
   }
 
-
-  
   function generateQuestions(questionArray) {
-    // let answers = new Array(questionArray.length); 
-    let correctAnswers = []
-    let questionItems;
-
-    questionItems = questionArray.map((question, index) => {
-        let choices = [question.correct_answer];
-        correctAnswers.push(question.correct_answer);
-        question.incorrect_answers.map(ans => choices.push(ans));
-        const shuffledChoices = choices.sort((a, b) => 0.5 - Math.random());
-
+    
+    let questionItems = questionArray.map((question) => {
         return {
                 id: nanoid(),
                 question: question.question, 
-                choices: shuffledChoices, 
+                choices: shuffleChoices([...question.incorrect_answers, question.correct_answer]), 
                 correctAnswer: question.correct_answer, 
-                // onSelectChoice: handleChoice,
-                // check: check
-                correctScore: 0
+                numCorrect: 0
               }
     })
     return questionItems;
   }
 
-
+  function shuffleChoices(choicesArray) {
+    let randomArr = [...choicesArray].sort(() => Math.random() - 0.5);
+    let randomChoices = randomArr.map((item) => {
+      return {
+        value: item,
+        id: nanoid(5),
+        isHeld: false,
+      };
+    });
+    return randomChoices;
+  }
 
   function checkQuestionAnswers() {
     setNumCorrect(0);
@@ -98,34 +87,59 @@ function App() {
     setCheck(true);
   }
 
-  // function holdChoice(id) {
-  //   setChoices(oldChoices => oldChoices.map(choice => {
-  //       return choice.id === id ? {...choice, isHeld: !choice.isHeld} : {...choice, isHeld: false}
-  //   }))
-  // }
-
-  function holdChoice(id) {
-    //TODO
+  function holdChoice(choiceId, questionId) {
+    setQuestions((prevQuestions) => prevQuestions.map((question) => {
+      if(question.id === questionId) {
+        let newChoicesArray = question.choices.map((choice) => {
+          if(choice.id === choiceId) {
+            return {
+              ...choice,
+              isHeld: true
+            }
+          } else {
+            return {
+              ...choice,
+              isHeld: false
+            }
+          }
+        })
+        return {
+          ...question,
+          choices: newChoicesArray
+        }
+      } else {
+        return question;
+      }
+    })
+    );
   }
 
-  // function checkAnswers() {
-  //     answers.map((answer, index) => {
-  //         if(correctAnswers[index] === answer) {
-  //             setNumCorrect(numCorrect => numCorrect + 1);
-  //         }
-  //     })
-  //     setCheck(true);
-  // }
+  function startGame() {
+    console.log(`starting a new game`);
+    setIsPlayingGame(true)
+  }
 
   return (
     <div className="App">
      <img className="img--bottom-left" src="blob 5.png" alt=""/>
-     {/* <p>{questions[0] && questions[0].category}</p> */}
 
+     {!isPlayingGame ? (
+        <Homepage startGame={startGame} />
+      ) : (
+        <Question
+          questions={questions}
+          setQuestions={setQuestions}
+          key={nanoid()}
+          check={check}
+          setCheck={setCheck}
+          holdChoice={holdChoice}
+          checkQuestionAnswers={checkQuestionAnswers}
+          numCorrect={numCorrect}
+          setNumCorrect={setNumCorrect}
+          generateNewGame={generateNewGame}
+        />
+      )}
 
-     {!isPlayingGame && <Homepage startGame={() => startGame()} />}
-     {/* <Question questions={questions} /> */}
-     {isPlayingGame && <Question startGame={() => startGame()} questions={questions} />}
      <img className="img--upper-right" src="blob 15.png" alt=""/>
     </div>
   );
